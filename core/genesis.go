@@ -214,6 +214,8 @@ func (g *Genesis) configOrDefault(ghash common.Hash) *params.ChainConfig {
 		return params.MainnetChainConfig
 	case ghash == params.TestnetGenesisHash:
 		return params.TestnetChainConfig
+    case ghash == params.ChainwareGenesisHash:
+        return params.ChainwareChainConfig
 	default:
 		return params.AllEthashProtocolChanges
 	}
@@ -318,6 +320,18 @@ func DefaultGenesisBlock() *Genesis {
 		Difficulty: big.NewInt(17179869184),
 		Alloc:      decodePrealloc(mainnetAllocData),
 	}
+}
+
+// DefaultChainwareGenesisBlock returns the Ethereum chainware net genesis block.
+func DefaultChainwareGenesisBlock() *Genesis {
+    return &Genesis{
+        Config:     params.ChainwareChainConfig,
+        Nonce:      66,
+        ExtraData:  hexutil.MustDecode("0x2626262626262626262626262626262626262626262626262626262626262626"),
+        GasLimit:   0x7fffffffffffffff,
+        Difficulty: big.NewInt(1048576),
+        Alloc:      decodePrealloc(chainwareAllocData),
+    }
 }
 
 // DefaultTestnetGenesisBlock returns the Ropsten network genesis block.
